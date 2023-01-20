@@ -24,4 +24,5 @@ Route::prefix('cloth')->group(function () {
 //LAUNDRY
 Route::prefix('laundry')->group(function () {
     Route::post('/add-laundry', [LaundryController::class, 'addLaundry']);
+    Route::post('/get-date', [LaundryController::class, 'getDateByID']);
 });

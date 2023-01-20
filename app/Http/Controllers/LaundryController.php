@@ -50,4 +50,27 @@ class LaundryController extends Controller
 
 
     }
+
+    public function getDateByID(Request $request){
+        $laundry = Laundry::find($request->post('laundry_id'));
+        if($laundry){
+            return response()->json([
+                'status' => 200,
+                'error' => 'NULL',
+                'data' => $laundry->finish_date
+            ]);
+        }else if(!$laundry){
+            return response()->json([
+                'status' => 404,
+                'error' => 'LAUNDRY_NOT_FOUND',
+                'data' => null,
+            ], 404);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'error' => 'INVALID_REQUEST',
+                'data' => $laundry->errors(),
+            ], 400);
+        }
+    }
 }
