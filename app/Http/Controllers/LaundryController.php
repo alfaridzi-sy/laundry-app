@@ -2,85 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreLaundryRequest;
-use App\Http\Requests\UpdateLaundryRequest;
+use Illuminate\Http\Request;
 use App\Models\Laundry;
 
 class LaundryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function addLaundry(Request $request)
     {
-        //
-    }
+        $cloths = $request->clothes;
+        $cloths_encode = '';
+        $cloths_counter = 0;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        foreach($cloths as $cloth) {
+            if ($cloths_counter === count($cloths) - 1) {
+                $cloths_encode .= $cloth['cloth_id'];
+            } else{
+                $cloths_encode .= $cloth['cloth_id'].',';
+            }
+            $cloths_counter++;
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreLaundryRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreLaundryRequest $request)
-    {
-        //
-    }
+        $laundries = Laundry::create([
+            'laundry_id' => $request->post('laundry_id'),
+            'name' => $request->post('name'),
+            'finish_date' => $request->post('finish_date'),
+            'price' => $request->post('price'),
+            'status' => $request->post('status'),
+            'clothes' => $cloths_encode,
+            'customer_name' => $request->post('customer_name'),
+            'customer_address' => $request->post('customer_address'),
+            'customer_phone_number' => $request->post('customer_phone_number'),
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Laundry  $laundry
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Laundry $laundry)
-    {
-        //
-    }
+        if($laundries){
+            return response()->json([
+                'status' => 201,
+                'error' => 'NULL',
+                'data' => $laundries
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'error' => 'INVALID_REQUEST',
+                'data' => $laundries->errors(),
+            ], 400);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Laundry  $laundry
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Laundry $laundry)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateLaundryRequest  $request
-     * @param  \App\Models\Laundry  $laundry
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateLaundryRequest $request, Laundry $laundry)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Laundry  $laundry
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Laundry $laundry)
-    {
-        //
     }
 }

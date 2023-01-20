@@ -11,5 +11,5 @@ class Laundry extends Model
 
     protected $table        = 'laundries';
     protected $primaryKey   = 'laundry_id';
-    protected $fillable     = ['name', 'finish_date', 'price', 'status', 'clothes', 'customer_name', 'customer_address', 'customer_phone_number'];
+    protected $fillable     = ['laundry_id', 'name', 'finish_date', 'price', 'status', 'clothes', 'customer_name', 'customer_address', 'customer_phone_number'];
 }

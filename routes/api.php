@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClothController;
+use App\Http\Controllers\LaundryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,9 @@ use App\Http\Controllers\ClothController;
 // CLOTH
 Route::prefix('cloth')->group(function () {
     Route::post('/add-cloth', [ClothController::class, 'addCloth']);
+});
+
+//LAUNDRY
+Route::prefix('laundry')->group(function () {
+    Route::post('/add-laundry', [LaundryController::class, 'addLaundry']);
 });
