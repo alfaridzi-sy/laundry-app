@@ -11,5 +11,5 @@ class Cloth extends Model
 
     protected $table        = 'cloths';
     protected $primaryKey   = 'cloth_id';
-    protected $fillable     = ['detail', 'category', 'image', 'status'];
+    protected $fillable     = ['cloth_id', 'detail', 'category', 'image', 'status'];
 }

@@ -2,85 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClothRequest;
-use App\Http\Requests\UpdateClothRequest;
+use Illuminate\Http\Request;
 use App\Models\Cloth;
 
 class ClothController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function addCloth(Request $request)
     {
-        //
-    }
+        $cloth = Cloth::find($request->post('cloth_id'));
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        if(!$cloth){
+            $cloths = Cloth::create([
+                'cloth_id' => $request->post('cloth_id'),
+                'detail' => $request->post('detail'),
+                'category' => $request->post('category'),
+                'image' => $request->post('image'),
+                'status' => $request->post('status'),
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreClothRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreClothRequest $request)
-    {
-        //
-    }
+            return response()->json([
+                'status' => 201,
+                'error' => 'NULL',
+                'data' => $cloths
+            ]);
+        }else if($cloth){
+            $cloth->update([
+                'cloth_id' => $request->post('cloth_id'),
+                'detail' => $request->post('detail'),
+                'category' => $request->post('category'),
+                'image' => $request->post('image'),
+                'status' => $request->post('status'),
+            ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cloth  $cloth
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cloth $cloth)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cloth  $cloth
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cloth $cloth)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateClothRequest  $request
-     * @param  \App\Models\Cloth  $cloth
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateClothRequest $request, Cloth $cloth)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cloth  $cloth
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cloth $cloth)
-    {
-        //
+            return response()->json([
+                'status' => 200,
+                'error' => 'NULL',
+                'data' => $cloth
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'error' => 'INVALID_REQUEST',
+                'data' => $cloth->errors(),
+            ], 400);
+        }
     }
 }
