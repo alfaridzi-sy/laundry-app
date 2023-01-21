@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Product Detail Page</title>
+        <title>Dilaundry - Live Report</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
@@ -19,7 +19,7 @@
                 @foreach ($laundries->cloths as $cloth )
                 <div class="col-md-12">
                     <div class="col-md-6">
-                        <img class="img-responsive" src="{{ $cloth-> image}}" alt="Product Image">
+                        <img class="img-responsive" src="https://laundry.umkmbedigital.com/public/storage/cloth/{{ $cloth-> image}}" alt="Product Image">
                     </div>
                     <div class="col-md-6">
                         <h3>{{ $cloth->category}}</h3>
