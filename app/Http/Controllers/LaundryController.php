@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Laundry;
+use App\Models\Cloth;
 
 class LaundryController extends Controller
 {
@@ -13,11 +14,11 @@ class LaundryController extends Controller
         $cloths_encode = '';
         $cloths_counter = 0;
 
-        foreach($cloths as $cloth) {
+        foreach($cloths as $i => $cloth) {
             if ($cloths_counter === count($cloths) - 1) {
-                $cloths_encode .= $cloth['cloth_id'];
+                $cloths_encode .= $cloth;
             } else{
-                $cloths_encode .= $cloth['cloth_id'].',';
+                $cloths_encode .= $cloth.',';
             }
             $cloths_counter++;
         }
@@ -47,8 +48,6 @@ class LaundryController extends Controller
                 'data' => $laundries->errors(),
             ], 400);
         }
-
-
     }
 
     public function getDateByID(Request $request){
@@ -72,5 +71,17 @@ class LaundryController extends Controller
                 'data' => $laundry->errors(),
             ], 400);
         }
+    }
+
+    public function liveReport($laundry_id){
+        $cloths_data = array();
+        $laundry = Laundry::find($laundry_id);
+        $clothes = explode(',',$laundry->clothes);
+        foreach($clothes as $c){
+            $cloth = Cloth::find($c);
+            array_push($cloths_data, $cloth);
+        }
+        $laundry->cloths = $cloths_data;
+        return view('live_report',["laundries" => $laundry]);
     }
 }
