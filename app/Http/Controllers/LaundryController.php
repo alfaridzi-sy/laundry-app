@@ -84,4 +84,19 @@ class LaundryController extends Controller
         $laundry->cloths = $cloths_data;
         return view('live_report',["laundries" => $laundry]);
     }
+
+    public function changeDate(Request $request, $laundry_id){
+        $cloths_data = array();
+        $laundry = Laundry::find($laundry_id);
+        $laundry->update([
+            'finish_date' => $request->post('finish_date'),
+        ]);
+        $clothes = explode(',',$laundry->clothes);
+        foreach($clothes as $c){
+            $cloth = Cloth::find($c);
+            array_push($cloths_data, $cloth);
+        }
+        $laundry->cloths = $cloths_data;
+        return view('live_report',["laundries" => $laundry]);
+    }
 }

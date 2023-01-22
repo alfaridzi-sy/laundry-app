@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dilaundry - Live Report</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>Dilaundry - Live</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{ $laundries->name}}</h1>
+                </div>
+                <div class="col-md-12">
+                    <form action="{{route('changeDate', $laundries -> laundry_id)}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="date" id="finish_date" name="finish_date" class="form-control" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required>
+                        <button type="submit" class="btn btn-warning">
+                            {{ __('Update') }}
+                        </button>
+                    </form>
+                    {{-- <p>{{ $laundries->finish_date }}</p> --}}
                 </div>
                 <div class="col-md-12">
                     <p>{{ $laundries->customer_name}}</p>
@@ -33,27 +44,3 @@
         </div>
     </body>
 </html>
-
-
-{{-- @foreach($laundries as $laundry) --}}
-    <div class="card shadow">
-        <div class="card-header">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h2 class="mb-0">{{ $laundries->laundry_id}}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="card-body border-0">
-            <div class="row">
-                <div class="col-4">
-                    @foreach ($laundries->cloths as $cloth )
-
-                    @endforeach
-                    <img src="/storage/product/{{ $cloth -> detail }}" width= "300px" >
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-{{-- @endforeach --}}

@@ -19,3 +19,5 @@ Route::get('/', function () {
 });
 
 Route::get('/report/{report}', [LaundryController::class, 'liveReport']);
+
+Route::put('/changeDate/{date}', [LaundryController::class, 'changeDate'])->name('changeDate');
