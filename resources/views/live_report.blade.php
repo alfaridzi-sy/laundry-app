@@ -29,6 +29,7 @@
                             <p class="card-text">{{ $laundries->price}} IDR</p>
                             <p class="card-text"><b>{{ $laundries->customer_address}}</b></p>
 
+
                             @foreach ($laundries->cloths as $cloth )
                             <hr>
                             <div class="row">
@@ -37,7 +38,23 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <h5>{{ $cloth->category}}</h5>
-                                    <button type="button" class="btn btn-sm btn-secondary" style="border-radius: 25px;" disabled>{{ $cloth->status}}</button>
+                                    <?php
+                                        if($laundries->status == "DONE"){
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-success" style="border-radius: 25px;" disabled>Sudah Diambil</button>
+                                    <?php
+                                        }else{
+                                            if($cloth->status == "clean"){
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-success" style="border-radius: 25px;" disabled>Sudah Diambil</button>
+                                    <?php
+                                            }else{
+                                    ?>
+                                        <button type="button" class="btn btn-sm btn-secondary" style="border-radius: 25px;" disabled>Belum Diambil</button>
+                                    <?php
+                                            }
+                                        }
+                                    ?>
                                     <p class="card-text"><br> {{ $cloth->detail}}</p>
                                 </div>
                             </div>
