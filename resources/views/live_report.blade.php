@@ -11,11 +11,11 @@
                     <h1>{{ $laundries->name}}</h1>
                 </div>
                 <div class="col-md-12">
-                    <form action="{{route('changeDate', $laundries -> laundry_id)}}" method="POST">
+                    <form action="{{route('changeDate', $laundries->id)}}" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="date" id="finish_date" name="finish_date" class="form-control" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required>
-                        <button type="submit" class="btn btn-warning">
+                        <input type="date" id="finish_date" name="finish_date" class="form-control col-6" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required>
+                        <button type="submit" class="btn btn-warning col-6">
                             {{ __('Update') }}
                         </button>
                     </form>

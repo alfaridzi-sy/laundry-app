@@ -74,20 +74,24 @@ class LaundryController extends Controller
     }
 
     public function liveReport($laundry_id){
+
         $cloths_data = array();
         $laundry = Laundry::find($laundry_id);
+        $id = ((string) $laundry_id);
         $clothes = explode(',',$laundry->clothes);
         foreach($clothes as $c){
             $cloth = Cloth::find($c);
             array_push($cloths_data, $cloth);
         }
         $laundry->cloths = $cloths_data;
+        $laundry->id = $id;
         return view('live_report',["laundries" => $laundry]);
     }
 
     public function changeDate(Request $request, $laundry_id){
         $cloths_data = array();
         $laundry = Laundry::find($laundry_id);
+        $id = ((string) $laundry_id);
         $laundry->update([
             'finish_date' => $request->post('finish_date'),
         ]);
@@ -97,6 +101,7 @@ class LaundryController extends Controller
             array_push($cloths_data, $cloth);
         }
         $laundry->cloths = $cloths_data;
+        $laundry->id = $id;
         return view('live_report',["laundries" => $laundry]);
     }
 }
