@@ -7,40 +7,46 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <h1>{{ $laundries->name}}</h1>
-                </div>
-                <div class="col-md-12">
-                    <form action="{{route('changeDate', $laundries->id)}}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="date" id="finish_date" name="finish_date" class="form-control col-6" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required>
-                        <button type="submit" class="btn btn-warning col-6">
-                            {{ __('Update') }}
-                        </button>
-                    </form>
-                    {{-- <p>{{ $laundries->finish_date }}</p> --}}
-                </div>
-                <div class="col-md-12">
-                    <p>{{ $laundries->customer_name}}</p>
-                    <p>{{ $laundries->customer_phone_number}}</p>
-                    <p>{{ $laundries->price}} IDR</p>
-                    <p><b>{{ $laundries->customer_address}}</b></p>
-                </div>
-                @foreach ($laundries->cloths as $cloth )
-                <div class="col-md-12">
-                    <div class="col-md-6">
-                        <img class="img-responsive" src="https://laundry.umkmbedigital.com/public/storage/cloth/{{ $cloth-> image}}" alt="Product Image">
-                    </div>
-                    <div class="col-md-6">
-                        <h3>{{ $cloth->category}}</h3>
-                        <p>{{ $cloth->status}}</p>
-                        <p>{{ $cloth->detail}}</p>
-                    </div>
-                </div>
-                @endforeach
+                <div class="col-md-6 mx-auto mt-5 mb-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ $laundries->name}}</h3>
+                            <br>
+                            <div class="form-group">
+                                <form action="{{route('changeDate', $laundries->id)}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="input-group">
+                                        <input type="date" id="finish_date" name="finish_date" class="form-control" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-warning" type="submit">Change</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <p class="card-text">{{ $laundries->customer_name}}</p>
+                            <p class="card-text">{{ $laundries->customer_phone_number}}</p>
+                            <p class="card-text">{{ $laundries->price}} IDR</p>
+                            <p class="card-text"><b>{{ $laundries->customer_address}}</b></p>
 
+                            @foreach ($laundries->cloths as $cloth )
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <img src="https://laundry.umkmbedigital.com/public/storage/cloth/{{ $cloth-> image}}" class="img-fluid">
+                                </div>
+                                <div class="col-sm-6">
+                                    <h5>{{ $cloth->category}}</h5>
+                                    <button type="button" class="btn btn-sm btn-secondary" style="border-radius: 25px;" disabled>{{ $cloth->status}}</button>
+                                    <p class="card-text"><br> {{ $cloth->detail}}</p>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </body>
 </html>
