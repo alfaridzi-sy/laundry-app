@@ -23,29 +23,49 @@ class LaundryController extends Controller
             $cloths_counter++;
         }
 
-        $laundries = Laundry::create([
-            'laundry_id' => $request->post('laundry_id'),
-            'name' => $request->post('name'),
-            'finish_date' => $request->post('finish_date'),
-            'price' => $request->post('price'),
-            'status' => $request->post('status'),
-            'clothes' => $cloths_encode,
-            'customer_name' => $request->post('customer_name'),
-            'customer_address' => $request->post('customer_address'),
-            'customer_phone_number' => $request->post('customer_phone_number'),
-        ]);
+        $laundry = Laundry::find($request->post('laundry_id'));
 
-        if($laundries){
+        if(!$laundry){
+            $laundries = Laundry::create([
+                'laundry_id' => $request->post('laundry_id'),
+                'name' => $request->post('name'),
+                'finish_date' => $request->post('finish_date'),
+                'price' => $request->post('price'),
+                'status' => $request->post('status'),
+                'clothes' => $cloths_encode,
+                'customer_name' => $request->post('customer_name'),
+                'customer_address' => $request->post('customer_address'),
+                'customer_phone_number' => $request->post('customer_phone_number'),
+            ]);
+
             return response()->json([
                 'status' => 201,
                 'error' => 'NULL',
                 'data' => $laundries
             ]);
+        }else if($laundry){
+            $laundry->update([
+                'laundry_id' => $request->post('laundry_id'),
+                'name' => $request->post('name'),
+                'finish_date' => $request->post('finish_date'),
+                'price' => $request->post('price'),
+                'status' => $request->post('status'),
+                'clothes' => $cloths_encode,
+                'customer_name' => $request->post('customer_name'),
+                'customer_address' => $request->post('customer_address'),
+                'customer_phone_number' => $request->post('customer_phone_number'),
+            ]);
+
+            return response()->json([
+                'status' => 200,
+                'error' => 'NULL',
+                'data' => $laundry
+            ]);
         }else{
             return response()->json([
                 'status' => 400,
                 'error' => 'INVALID_REQUEST',
-                'data' => $laundries->errors(),
+                'data' => $laundry->errors(),
             ], 400);
         }
     }
