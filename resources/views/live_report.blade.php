@@ -21,7 +21,7 @@
                                     </div>
 
                                     <div class="input-group">
-                                        <input type="date" id="finish_date" name="finish_date" class="form-control" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required <?php if($laundries->status != "DONE") echo "disabled"; ?>>
+                                        <input type="date" id="finish_date" name="finish_date" class="form-control" value="{{ $laundries->finish_date }}" min="2022-01-01" max="2023-12-31" required <?php if($laundries->status == "DONE") echo "disabled"; ?>>
                                         <div class="input-group-append">
                                             <button class="btn btn-warning" type="submit">Change</button>
                                         </div>
